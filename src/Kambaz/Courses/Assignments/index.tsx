@@ -3,7 +3,6 @@ import * as db from "../../Database";
 
 import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "../Modules/LessonControlButtons";
-import ModuleControlButtons from "../Modules/ModuleControlButtons";
 import { IoEllipsisVertical } from "react-icons/io5";
 
 import { MdOutlineAssignment } from "react-icons/md";
