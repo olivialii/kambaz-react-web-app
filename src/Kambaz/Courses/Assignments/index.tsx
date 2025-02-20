@@ -1,75 +1,62 @@
-import { ListGroup } from "react-bootstrap";
+import { useParams } from "react-router";
+import * as db from "../../Database";
+
 import { BsGripVertical } from "react-icons/bs";
-import LessonControlButtons from "../Modules/ModuleControlButtons";
+import LessonControlButtons from "../Modules/LessonControlButtons";
+import ModuleControlButtons from "../Modules/ModuleControlButtons";
+import { IoEllipsisVertical } from "react-icons/io5";
+
 import { MdOutlineAssignment } from "react-icons/md";
-import { InputGroup, FormControl} from "react-bootstrap";
-import { BiPlus, BiSearch } from "react-icons/bi";
+import { BiPlus, BiSearch, BiCaretDown } from "react-icons/bi";
+import { InputGroup, FormControl } from "react-bootstrap";
+
+
 
 export default function Assignments() {
+    const { cid } = useParams();
+    const assignments = db.assignments;
+
     return (
-      <div id="wd-assignments">
+        <div>
+            <div className="container">
+                <InputGroup className="mb-3">
+                    <InputGroup.Text><BiSearch /></InputGroup.Text>
+                    <FormControl placeholder="Search for Assignments" />
+                    <button className="btn btn-red"> <BiPlus /> Assignment</button>
+                    <button className="btn btn-secondary"> <BiPlus /> Group</button>
+                </InputGroup>
+            </div>
+            <br /><br /><br />
+            
+            <ul id="wd-modules" className="list-group rounded-0">
 
-<div className="container">
+                                      <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
+                            <div className="wd-title p-3 ps-2 bg-secondary">
+                            <BsGripVertical className="me-2 fs-3" /> <BiCaretDown/> <span className="p-1">ASSIGNMENTS </span>
+                            <div className="float-end">
+                            <BiPlus/>
+                            <IoEllipsisVertical className="fs-4" />
+                            </div>
+                            </div>
+                {assignments
+                    .filter(assignment => assignment.course === cid)
+                    .map(assignment => (
 
-        
-        <InputGroup className="mb-3">
-            <InputGroup.Text><BiSearch></BiSearch></InputGroup.Text>
-            <FormControl placeholder= {"Search for Assignments"}/>
-        <button className="btn btn-red"> <BiPlus/> Assignment</button>
-        <button className="btn btn-secondary"> <BiPlus/>  Group</button>
-        
-        </InputGroup>  
-        
-</div>
-        <br/><br/>
-          
-          <ListGroup className="rounded-0" id="wd-modules">
-    <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
-      <div className="wd-title p-3 ps-2 bg-secondary">
-        <BsGripVertical className="me-2 fs-3" /> Assignments 
-          <LessonControlButtons />
+                            <ul className="wd-lessons list-group rounded-0">
+                                <li className="wd-lesson list-group-item p-3 ps-1">
+                                    <BsGripVertical className="me-2 fs-3" />
+                             
+                                    <MdOutlineAssignment />
+                                    <a href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`} className="wd-assignment-link p-3">
+                                        {assignment.title}
+                                    </a>
+                                    <LessonControlButtons />
+                                </li>
+                            </ul>
+                       
+                    ))} 
+                    </li>
+            </ul>
         </div>
-        
-      <ListGroup className="wd-lessons rounded-0">
-        <ListGroup.Item className="wd-lesson p-3 ps-1">
-          
-    
-            <BsGripVertical className="me-2 fs-3" />
-            <MdOutlineAssignment/>
-            <a href="#/Kambaz/Courses/1234/Assignments/123"
-               className="wd-assignment-link" >
-              A1 
-              </a> 
-
-            <LessonControlButtons />
-        </ListGroup.Item>
-
-        <ListGroup.Item className="wd-lesson p-3 ps-1">
-            <BsGripVertical className="me-2 fs-3" />
-            <MdOutlineAssignment/>
-            <a href="#/Kambaz/Courses/1234/Assignments/123"
-               className="wd-assignment-link" >
-              A2
-              </a>
-            <LessonControlButtons />
-        </ListGroup.Item>
-
-        <ListGroup.Item className="wd-lesson p-3 ps-1">
-            <BsGripVertical className="me-2 fs-3" />
-            <MdOutlineAssignment/>
-            <a href="#/Kambaz/Courses/1234/Assignments/123"
-               className="wd-assignment-link" >
-              A3
-              </a>
-               <LessonControlButtons />
-        </ListGroup.Item>
-      
-      </ListGroup>
-    </ListGroup.Item>
-  </ListGroup>
-
-
-
-      </div>
-  );}
-  
+    );
+}
