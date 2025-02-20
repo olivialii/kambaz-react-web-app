@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 export default function Signin() {
   return (
     <div id="wd-signin-screen">
-      <h1>Sign in</h1>
+      <h3>Sign in</h3>
       <Form.Control id="wd-username"
              placeholder="username"
              className="mb-2"/>
