@@ -88,9 +88,7 @@ export default function AssignmentEditor({
 
 
             <Button variant="secondary" onClick={handleClose}> Cancel </Button>
-        <Button variant="danger" onClick={() => {addAssignment();
-
-        }} > Save </Button>
+        <Button variant="danger" onClick={() => {addAssignment}} > Save </Button>
   
 
         </div>

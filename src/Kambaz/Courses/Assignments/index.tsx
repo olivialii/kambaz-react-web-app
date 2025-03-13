@@ -12,6 +12,7 @@ import { BiPlus, BiSearch, BiCaretDown } from "react-icons/bi";
 import { InputGroup, FormControl } from "react-bootstrap";
 import FacultyProtected from "../../Account/FacultyProtected";
 import AssignmentControls from "./AssignmentControls";
+import AssignmentControlButtons from "./AssignmentControlButtons";
 
 
 
@@ -63,7 +64,11 @@ export default function Assignments() {
                                             <a href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`} className="wd-assignment-link p-3">
                                                 {assignment.title}
                                             </a>
-                                        <LessonControlButtons />
+                                            <AssignmentControlButtons assignmentId={assignment._id}
+                  deleteAssignment={(assignmentId) => {
+                    dispatch(deleteAssignment(assignmentId));
+                  }}/>
+                                       
                                         </div>
                                     )}
 
@@ -78,10 +83,15 @@ export default function Assignments() {
                                                     dispatch(updateAssignment({ ...assignment, editing: false }));
                                                 }
                                             }}
+                                            
                                             defaultValue={assignment.title}
+                                            
                                         />
+                                        
+                                        
                                     )}
 
+                
 
                                 </li>
                             </ul>
