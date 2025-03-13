@@ -5,18 +5,30 @@ import ModulesControls from "./ModulesControls";
 import { BsGripVertical } from "react-icons/bs";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "./LessonControlButtons";
-
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 
 export default function Modules() {
   const { cid } = useParams();
-  const modules = db.modules;
+  const [modules, setModules] = useState<any[]>(db.modules);
+  const [moduleName, setModuleName] = useState("");
+  const addModule = () => {
+    setModules([ ...modules, { _id: uuidv4(), name: moduleName, course: cid, lessons: [] } ]);
+    setModuleName("");
+  };
 
   
-    return (
-      <div><ModulesControls /><br /><br /><br />
+  return (
+    <div className="wd-modules">
+      
 
-<ul id="wd-modules" className="list-group rounded-0">
+<div id="wd-modules" className="list-group rounded-0">
+
+<div className="pb-2">
+<ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={addModule} />
+</div>
+        
         {modules
           .filter((module: any) => module.course === cid)
           .map((module: any) => (
@@ -30,7 +42,7 @@ export default function Modules() {
                   <li className="wd-lesson list-group-item p-3 ps-1">
                     <BsGripVertical className="me-2 fs-3" /> {lesson.name} <LessonControlButtons />
                   </li>
-    ))}</ul>)}</li>))}</ul>
+    ))}</ul>)}</li>))}</div>
 </div>
 
   );}

@@ -1,4 +1,4 @@
-import { courses } from "../Database";
+import { useState } from "react";
 import CourseNavigation from "./Navigation";
 import Modules from "./Modules";
 import Home from "./Home";

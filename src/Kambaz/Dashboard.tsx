@@ -30,7 +30,7 @@ export default function Dashboard(
       <FormControl value={course.name} className="mb-2" 
        onChange={(e) => setCourse({ ...course, name: e.target.value }) } />
 
-      <FormControl value={course.description} rows={3}
+      <FormControl value={course.description} 
        onChange={(e) => setCourse({ ...course, description: e.target.value }) } />
 
 
