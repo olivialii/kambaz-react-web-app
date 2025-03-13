@@ -1,23 +1,29 @@
 import { useParams } from "react-router-dom";
 import * as db from "../../Database";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Modal, FormControl, Form, Button, Row, Col } from "react-bootstrap";
 
-export default function AssignmentEditor() {
-    const { cid, aid } = useParams();
-    const assignment = db.assignments.find(a => a._id === aid && a.course === cid);
+export default function AssignmentEditor({ show, handleClose, dialogTitle, assignmentTitle, setAssignmentTitle, addAssignment,}: {
+    show: boolean; handleClose: () => void; dialogTitle: string; assignmentTitle: string; setAssignmentTitle: (title: string) => void;
+    addAssignment: () => void; }) {
 
-    if (!assignment) {
-        return <p>Assignment not found.</p>;
-    }
+
 
     return (
-        <div className="container">
-            <h2>Edit Assignment</h2>
+        
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+        <Modal.Title>{dialogTitle}</Modal.Title>
+        </Modal.Header>
+
+ 
+            
+
+            <Modal.Body>
             <Form>
-                <Form.Group className="mb-3">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" defaultValue={assignment.title} />
-                </Form.Group>
+            <Form.Label>Title</Form.Label>
+            <FormControl className= "mb-3" value={assignmentTitle} 
+            onChange={(e) => { setAssignmentTitle(e.target.value); }} />
+
                 <Form.Group className="mb-3">
                     <Form.Label>Description</Form.Label>
                     <Form.Control as="textarea" rows={3} defaultValue="The assignment is available online" />
@@ -46,15 +52,15 @@ export default function AssignmentEditor() {
                             <Row className="mb-2">
                                 <Col>
                                     <Form.Label>Due Date</Form.Label>
-                                    <Form.Control type="date" defaultValue={""} />
+                                    <Form.Control type="date" defaultValue={"2025-03-12"} />
                                 </Col>
                                 <Col>
                                     <Form.Label>Available from</Form.Label>
-                                    <Form.Control type="date" defaultValue={""} />
+                                    <Form.Control type="date" defaultValue={"2025-03-10"} />
                                 </Col>
                                 <Col>
                                     <Form.Label>Until</Form.Label>
-                                    <Form.Control type="date" defaultValue={""} />
+                                    <Form.Control type="date" defaultValue={"2025-03-14"} />
                                 </Col>
                             </Row>
                         </div>
@@ -62,10 +68,19 @@ export default function AssignmentEditor() {
                 </Row>
                 </div>
             </Form>
-            <div className="d-flex gap-2 justify-content-end">
-                <Button className="btn btn-secondary">Cancel</Button>
-                <Button className="btn btn-danger">Save</Button>
-            </div>
-        </div>
+            </Modal.Body>
+
+           
+
+
+        <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}> Cancel </Button>
+        <Button variant="danger"
+        onClick={() => {
+        addAssignment();
+        handleClose();
+        }} > Save </Button>
+        </Modal.Footer>
+        </Modal>
     );
 }

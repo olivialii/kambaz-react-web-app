@@ -2,19 +2,30 @@
 import { Link } from "react-router-dom";
 import { FormControl, Card} from "react-bootstrap";
 
+import { useSelector } from "react-redux";
+import * as db from "./Database";
+import FacultyProtected from "./Account/FacultyProtected";
+
+
+
 
 export default function Dashboard(
+  
   { courses, course, setCourse, addNewCourse,
     deleteCourse, updateCourse }: {
     courses: any[]; course: any; setCourse: (course: any) => void;
     addNewCourse: () => void; deleteCourse: (course: any) => void;
     updateCourse: () => void; })
    {
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const { enrollments } = db;
   
 
     return (
       <div id="wd-dashboard">
         <h1>Dashboard</h1>
+
+        <FacultyProtected>
         <h5>
         New Course
         <button className="btn btn-primary float-end"
@@ -35,11 +46,19 @@ export default function Dashboard(
 
 
       <hr />
+      </FacultyProtected>
 
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
       <div className="row" id="wd-dashboard-courses">
         <div className="row row-cols-1 row-cols-md-5 g-4">
-          {courses.map((course) => (
+          {courses
+            .filter((course) =>
+            enrollments.some(
+              (enrollment) =>
+                enrollment.user === currentUser._id &&
+                enrollment.course === course._id
+              ))
+         .map((course) => (
             <div key={course._id} className="col" style={{ width: "300px" }}>
               <div className="card">
               <Card>
@@ -52,6 +71,8 @@ export default function Dashboard(
                   <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                     {course.description} </Card.Text>
                     <button className="btn btn-primary">Go </button>
+
+                    <FacultyProtected>
                     <button onClick={(event) => {
                               event.preventDefault();
                               deleteCourse(course._id);
@@ -67,7 +88,7 @@ export default function Dashboard(
                       className="btn btn-warning me-2 float-end" >
                       Edit
                     </button>
-
+                    </FacultyProtected>
 
                 </Card.Body>
               </Link>

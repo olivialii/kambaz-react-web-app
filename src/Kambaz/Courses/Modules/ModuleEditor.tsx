@@ -12,6 +12,7 @@ export default function ModuleEditor({ show, handleClose, dialogTitle, moduleNam
      onChange={(e) => { setModuleName(e.target.value); }} />
    </Modal.Body>
    <Modal.Footer>
+    
     <Button variant="secondary" onClick={handleClose}> Cancel </Button>
     <Button variant="danger"
      onClick={() => {

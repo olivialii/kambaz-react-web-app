@@ -1,40 +1,73 @@
+import { addModule, editModule, updateModule, deleteModule }
+  from "./reducer";
+import { useSelector, useDispatch } from "react-redux";
+
 import { useParams } from "react-router";
-import * as db from "../../Database";
 
 import ModulesControls from "./ModulesControls";
 import { BsGripVertical } from "react-icons/bs";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "./LessonControlButtons";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+
+import { FormControl } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
+import FacultyProtected from "../../Account/FacultyProtected";
 
 
 export default function Modules() {
   const { cid } = useParams();
-  const [modules, setModules] = useState<any[]>(db.modules);
   const [moduleName, setModuleName] = useState("");
-  const addModule = () => {
-    setModules([ ...modules, { _id: uuidv4(), name: moduleName, course: cid, lessons: [] } ]);
-    setModuleName("");
-  };
+  const { modules } = useSelector((state: any) => state.modulesReducer);
+  const dispatch = useDispatch();
+
 
   
   return (
     <div className="wd-modules">
+
       
 
-<div id="wd-modules" className="list-group rounded-0">
+    <ListGroup id="wd-modules" className="rounded-0">
+      <FacultyProtected>
+      <div className="pb-2">
+      <ModulesControls moduleName={moduleName} setModuleName={setModuleName}
+        addModule={() => {
+          dispatch(addModule({ name: moduleName, course: cid }));
+          setModuleName("");
+        }} />
+      </div>
+      </FacultyProtected>
 
-<div className="pb-2">
-<ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={addModule} />
-</div>
-        
         {modules
           .filter((module: any) => module.course === cid)
           .map((module: any) => (
           <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
             <div className="wd-title p-3 ps-2 bg-secondary">
-              <BsGripVertical className="me-2 fs-3" /> {module.name} <ModuleControlButtons />
+              <BsGripVertical className="me-2 fs-3" /> 
+
+              {!module.editing && module.name}
+            { module.editing && (
+              <FormControl className="w-50 d-inline-block"
+              onChange={(e) =>
+                dispatch(
+                  updateModule({ ...module, name: e.target.value })
+                )
+              }
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  dispatch(updateModule({ ...module, editing: false }));
+                }
+              }}
+              defaultValue={module.name} />
+      )}            
+        
+        <ModuleControlButtons moduleId={module._id}
+                  deleteModule={(moduleId) => {
+                    dispatch(deleteModule(moduleId));
+                  }}
+                  editModule={(moduleId) => dispatch(editModule(moduleId))} />
+
             </div>
             {module.lessons && (
               <ul className="wd-lessons list-group rounded-0">
@@ -42,8 +75,9 @@ export default function Modules() {
                   <li className="wd-lesson list-group-item p-3 ps-1">
                     <BsGripVertical className="me-2 fs-3" /> {lesson.name} <LessonControlButtons />
                   </li>
-    ))}</ul>)}</li>))}</div>
-</div>
+    ))}</ul>)}</li>))}</ListGroup>
+    </div>
+
 
   );}
   

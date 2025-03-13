@@ -1,5 +1,6 @@
 import Modules from "../Modules";
 import CourseStatus from "./Status";
+import FacultyProtected from "../../Account/FacultyProtected";
 
 export default function Home() {
   return (
@@ -9,9 +10,12 @@ export default function Home() {
     <Modules />
   </div>
 
+<FacultyProtected>
   <div className="d-none d-xl-block">
     <CourseStatus />
   </div>
+</FacultyProtected>
+
 </div>
 
 );}
