@@ -44,11 +44,23 @@ export default function Dashboard(
       <FormControl value={course.description} 
        onChange={(e) => setCourse({ ...course, description: e.target.value }) } />
 
-
+      
       <hr />
       </FacultyProtected>
 
-      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
+    
+      <h2 id="wd-dashboard-published" >Published Courses ({courses.length})
+     <button className="btn btn-primary float-end me-2">Enrollments </button> <div/>
+      </h2> 
+     
+      
+
+      
+      <hr />
+
+     
+     
+  
       <div className="row" id="wd-dashboard-courses">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {courses

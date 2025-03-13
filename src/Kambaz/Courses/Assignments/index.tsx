@@ -1,15 +1,15 @@
 import { useParams } from "react-router";
-import { addAssignment, editAssignment, updateAssignment, deleteAssignment }
+import { addAssignment, updateAssignment, deleteAssignment }
   from "./reducer";
-import * as db from "../../Database";
+
 import { useSelector, useDispatch } from "react-redux";
 import { BsGripVertical } from "react-icons/bs";
-import LessonControlButtons from "../Modules/LessonControlButtons";
+
 import { IoEllipsisVertical } from "react-icons/io5";
 import { useState } from "react";
 import { MdOutlineAssignment } from "react-icons/md";
-import { BiPlus, BiSearch, BiCaretDown } from "react-icons/bi";
-import { InputGroup, FormControl } from "react-bootstrap";
+import { BiPlus, BiCaretDown } from "react-icons/bi";
+import { FormControl } from "react-bootstrap";
 import FacultyProtected from "../../Account/FacultyProtected";
 import AssignmentControls from "./AssignmentControls";
 import AssignmentControlButtons from "./AssignmentControlButtons";
