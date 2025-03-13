@@ -8,6 +8,7 @@ import * as db from "./Database";
 import { useState } from "react";
 
 
+
 export default function Kambaz() {
   const [courses, setCourses] = useState<any[]>(db.courses);
   const [course, setCourse] = useState<any>({
@@ -32,6 +33,7 @@ export default function Kambaz() {
     );
   };
 
+
   return (
     <div id="wd-kambaz">
 
@@ -41,17 +43,18 @@ export default function Kambaz() {
             <Routes>
               <Route path="/" element={<Navigate to="Account"  />} />
               <Route path="/Account/*" element={<Account />} />
-              <Route path="/Dashboard" element={            <Dashboard
+              <Route path="Dashboard" element={
+            <Dashboard
               courses={courses}
               course={course}
               setCourse={setCourse}
               addNewCourse={addNewCourse}
               deleteCourse={deleteCourse}
-              updateCourse={updateCourse}/>} />
-              <Route path="/Courses/:cid/*" element={<Courses />} />
-              <Route path="/Calendar" element={<h1>Calendar</h1>} />
-              <Route path="/Inbox" element={<h1>Inbox</h1>} />
-            </Routes>
+              updateCourse={updateCourse}/>
+          } />
+          <Route path="Courses/:cid/*" element={<Courses courses={courses} />} />
+        </Routes>
+
         </div>
     </div>
 );}
