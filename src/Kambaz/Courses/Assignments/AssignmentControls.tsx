@@ -3,12 +3,15 @@ import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { BiSearch } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function AssignmentControls() {
+export default function AssignmentControls(
+  {}:
+  {assignmentTitle: string; setAssignmentTitle: (title:string) => void; addAssignment: () => void;}
+) {
   const { cid } = useParams();
   const navigate = useNavigate();
 
   return (
-    <div id="wd-modules-controls" className="text-nowrap">
+    <div id="wd-assignments-controls" className="text-nowrap">
       <InputGroup className="mb-3">
         <InputGroup.Text>
           <BiSearch />
