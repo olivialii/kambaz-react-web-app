@@ -1,41 +1,24 @@
 import { useParams } from "react-router-dom";
 import * as db from "../../Database";
 import { Modal, FormControl, Form, Button, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { addAssignment } from "./reducer";
-import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
 
-export default function AssignmentEditor({
-    show,
-    dialogTitle,
-    assignmentTitle,
-    setAssignmentTitle,
-  }: {
-    show: boolean;
-    handleClose: () => void;
-    dialogTitle: string;
-    assignmentTitle: string;
-    setAssignmentTitle: (title: string) => void;
+export default function AssignmentEditor({ show, handleClose, dialogTitle, assignmentTitle, setAssignmentTitle, addAssignment,}: {
+    show: boolean; handleClose: () => void; dialogTitle: string; assignmentTitle: string; setAssignmentTitle: (title: string) => void;
+    addAssignment: () => void; }) {
 
-  }) {
-
-        const { cid } = useParams();
-        const navigate = useNavigate();
-        const dispatch = useDispatch();
-            
-        const handleClose = () => {
-            navigate(`/Kambaz/Courses/${cid}/Assignments`);
-          };
-
-        
 
 
     return (
-        <div className="container">
-            <h2>Edit Assignment</h2>
+        
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+        <Modal.Title>{dialogTitle}</Modal.Title>
+        </Modal.Header>
 
-   
+ 
+            
+
+            <Modal.Body>
             <Form>
             <Form.Label>Title</Form.Label>
             <FormControl className= "mb-3" value={assignmentTitle} 
@@ -85,14 +68,19 @@ export default function AssignmentEditor({
                 </Row>
                 </div>
             </Form>
+            </Modal.Body>
+
+           
 
 
+        <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}> Cancel </Button>
-        <Button variant="danger" onClick={() => {addAssignment();
-
+        <Button variant="danger"
+        onClick={() => {
+        addAssignment();
+        handleClose();
         }} > Save </Button>
-  
-
-        </div>
+        </Modal.Footer>
+        </Modal>
     );
 }
