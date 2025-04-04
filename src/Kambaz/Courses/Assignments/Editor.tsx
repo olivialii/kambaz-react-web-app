@@ -139,12 +139,13 @@ export default function AssignmentEditor({
         </div>
       </Form>
 
-      <Button variant="secondary" onClick={handleClose}>
-        Cancel
-      </Button>
-      <Button variant="danger" onClick={handleSave}>
+      <Button className="float-end m-1" variant="danger" onClick={handleSave}>
         Save
       </Button>
+      <Button className="float-end m-1" variant="secondary" onClick={handleClose}>
+        Cancel
+      </Button>
+      
     </div>
   );
 }

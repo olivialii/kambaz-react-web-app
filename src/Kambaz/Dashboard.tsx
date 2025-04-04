@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import * as db from "./Database";
 import FacultyProtected from "./Account/FacultyProtected";
 import { useState } from "react";
+import Button from "react-bootstrap";
 
 
 export default function Dashboard(
@@ -19,6 +20,19 @@ export default function Dashboard(
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { enrollments } = db;
   const [showAllCourses, setShowAllCourses] = useState(false);
+  const isUserEnrolled = (courseId: string) =>
+  enrollments.some(
+    (enrollment) =>
+      enrollment.user === currentUser._id && enrollment.course === courseId
+  );
+  const toggleEnrollment = (event: any, courseId: string) => {
+    event.preventDefault();
+    if (isUserEnrolled(courseId)) {
+      unenroll(currentUser._id, courseId); // Unenroll the user
+    } else {
+      enroll(currentUser._id, courseId); // Enroll the user
+    }
+  };
 
   return (
     <div id="wd-dashboard">
@@ -53,7 +67,7 @@ export default function Dashboard(
           id="wd-toggle-enrollment"
           onClick={() => setShowAllCourses(!showAllCourses)}
         >
-          {showAllCourses ? "Show Enrolled Courses" : "Show All Courses"}
+          {showAllCourses ? "Enrollments" : "Enrollments"}
         </button>
       </h2>
 
@@ -80,6 +94,15 @@ export default function Dashboard(
                         <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
                           {course.name}
                         </Card.Title>
+
+                        <button
+                            variant={isUserEnrolled(course._id) ? "danger" : "success"}
+                            size="sm"
+                            onClick={(event) => toggleEnrollment(event, course._id)}
+                          >
+                            {isUserEnrolled(course._id) ? "Unenroll" : "Enroll"}
+                          </button>
+
                         <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                           {course.description}
                         </Card.Text>

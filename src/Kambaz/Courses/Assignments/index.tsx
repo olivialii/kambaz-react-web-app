@@ -36,9 +36,6 @@ export default function Assignments() {
       </div>
       </FacultyProtected>
   
-      
-            
-            
             <ul id="wd-assignments" className="list-group rounded-0">
 
                             <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
@@ -56,8 +53,9 @@ export default function Assignments() {
                         .map((assignment: any) => (
                             <ul className="wd-lessons list-group rounded-0" key={assignment._id}>
                                 <li className="wd-lesson list-group-item p-3 ps-1">
-                                    
-                                    
+                            
+
+
                                     {!assignment.editing && (
                                         <div><BsGripVertical className="me-2 fs-3" />
                                             <MdOutlineAssignment />
