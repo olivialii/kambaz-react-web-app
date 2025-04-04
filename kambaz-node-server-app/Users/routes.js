@@ -30,11 +30,11 @@ export default function UserRoutes(app) {
     res.json(currentUser);
   };
 
-  const signout = (req, res) => {
-    currentUser = null;
-    res.sendStatus(200);
+  const signout = async (req, res) => {
+    const { username, password } = req.body;
+    currentUser = dao.findUserByCredentials(username, password);
+    res.json(currentUser);
   };
-
   const profile = async (req, res) => {
     res.json(currentUser);
   };
