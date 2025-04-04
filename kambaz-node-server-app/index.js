@@ -4,10 +4,13 @@ import Hello from "./Hello.js";
 import Lab5 from "./Lab5/index.js";
 import cors from "cors";
 import UserRoutes from './Users/routes.js';
+import CourseRoutes from "./Kambaz/Courses/routes.js";
 import "dotenv/config";
 
 const app = express();
 UserRoutes(app);
+CourseRoutes(app);
+
 
 app.use(
     cors({
