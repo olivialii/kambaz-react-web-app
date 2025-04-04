@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Routes, Route, Navigate } from "react-router";
 import AccountNavigation from "./Navigation";
+import Session from "./Session";
 
 import Signin from "./Signin";
 import Profile from "./Profile";
@@ -10,6 +11,7 @@ export default function Account() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   return (
+    <Session>
     <div id="wd-account-screen">
       <table>
         <tr>
@@ -28,4 +30,5 @@ export default function Account() {
         </tr>
       </table>
     </div>
+    </Session>
 );}
