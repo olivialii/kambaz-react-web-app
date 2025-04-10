@@ -67,7 +67,7 @@ export default function Dashboard(
           id="wd-toggle-enrollment"
           onClick={() => setShowAllCourses(!showAllCourses)}
         >
-          {showAllCourses ? "Enrollments" : "Enrollments"}
+          {showAllCourses ? "Show Enrolled Courses" : "Show All Courses"}
         </button>
       </h2>
 
