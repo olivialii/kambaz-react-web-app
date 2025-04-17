@@ -1,4 +1,4 @@
-import { addModule, editModule, updateModule, deleteModule }
+import { setModules, addModule, editModule, updateModule, deleteModule }
   from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -8,11 +8,12 @@ import ModulesControls from "./ModulesControls";
 import { BsGripVertical } from "react-icons/bs";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "./LessonControlButtons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { FormControl } from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
 import FacultyProtected from "../../Account/FacultyProtected";
+import * as coursesClient from "../client";
 
 
 export default function Modules() {
@@ -21,7 +22,13 @@ export default function Modules() {
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
 
-
+  const fetchModules = async () => {
+    const modules = await coursesClient.findModulesForCourse(cid as string);
+    dispatch(setModules(modules));
+  };
+  useEffect(() => {
+    fetchModules();
+  }, []);
   
   return (
     <div className="wd-modules">
@@ -40,7 +47,6 @@ export default function Modules() {
       </FacultyProtected>
 
         {modules
-          .filter((module: any) => module.course === cid)
           .map((module: any) => (
           <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
             <div className="wd-title p-3 ps-2 bg-secondary">
