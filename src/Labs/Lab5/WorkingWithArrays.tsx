@@ -1,6 +1,5 @@
 import{ useState } from "react";
 import { FormControl } from "react-bootstrap";
-import { TiDelete } from "react-icons/ti";
 
 const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 export default function WorkingWithArrays() {

@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { FormControl, Card} from "react-bootstrap";
 
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 
 import FacultyProtected from "./Account/FacultyProtected";
 import { useState } from "react";
@@ -17,9 +17,11 @@ export default function Dashboard(
     updateCourse: () => void;
   }) {
   
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  //const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const [showAllCourses, setShowAllCourses] = useState(false);
+  
+  {/** 
   const isUserEnrolled = (courseId: string) =>
   enrollments.some(
     (enrollment) =>
@@ -33,6 +35,7 @@ export default function Dashboard(
       enroll(currentUser._id, courseId); // Enroll the user
     }
   };
+*/}
 
   return (
     <div id="wd-dashboard">
@@ -98,7 +101,7 @@ export default function Dashboard(
                             {isUserEnrolled(course._id) ? "Unenroll" : "Enroll"}
                           </button>
                         */}
-                        
+
                         <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                           {course.description}
                         </Card.Text>
