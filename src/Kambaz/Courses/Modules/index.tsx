@@ -14,6 +14,8 @@ import { FormControl } from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
 import FacultyProtected from "../../Account/FacultyProtected";
 import * as coursesClient from "../client";
+import * as modulesClient from "./client";
+
 
 
 export default function Modules() {
@@ -21,6 +23,13 @@ export default function Modules() {
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
+
+  const removeModule = async (moduleId: string) => {
+    await modulesClient.deleteModule(moduleId);
+    dispatch(deleteModule(moduleId));
+  };
+
+
   const createModuleForCourse = async () => {
     if (!cid) return;
     const newModule = { name: moduleName, course: cid };
@@ -75,9 +84,7 @@ export default function Modules() {
       )}            
         
         <ModuleControlButtons moduleId={module._id}
-                  deleteModule={(moduleId) => {
-                    dispatch(deleteModule(moduleId));
-                  }}
+                  deleteModule={(moduleId) => removeModule(moduleId)}
                   editModule={(moduleId) => dispatch(editModule(moduleId))} />
 
             </div>
