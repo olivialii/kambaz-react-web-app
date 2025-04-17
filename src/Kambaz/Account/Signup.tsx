@@ -4,6 +4,7 @@ import * as client from "./client";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "./reducer";
 import { FormControl } from "react-bootstrap";
+
 export default function Signup() {
   const [user, setUser] = useState<any>({});
   const navigate = useNavigate();
