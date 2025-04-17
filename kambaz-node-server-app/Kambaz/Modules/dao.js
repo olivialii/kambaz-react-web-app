@@ -16,3 +16,11 @@ export function findModulesForCourse(courseId) {
   const { modules } = Database;
   return modules.filter((module) => module.course === courseId);
 }
+
+export function updateModule(moduleId, moduleUpdates) {
+    const { modules } = Database;
+    const module = modules.find((module) => module._id === moduleId);
+    Object.assign(module, moduleUpdates);
+    return module;
+  }
+  
