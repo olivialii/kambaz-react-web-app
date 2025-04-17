@@ -21,6 +21,13 @@ export default function Modules() {
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
+  const createModuleForCourse = async () => {
+    if (!cid) return;
+    const newModule = { name: moduleName, course: cid };
+    const module = await coursesClient.createModuleForCourse(cid, newModule);
+    dispatch(addModule(module));
+  };
+
 
   const fetchModules = async () => {
     const modules = await coursesClient.findModulesForCourse(cid as string);
@@ -39,10 +46,8 @@ export default function Modules() {
       <FacultyProtected>
       <div className="pb-2">
       <ModulesControls moduleName={moduleName} setModuleName={setModuleName}
-        addModule={() => {
-          dispatch(addModule({ name: moduleName, course: cid }));
-          setModuleName("");
-        }} />
+        addModule={createModuleForCourse}
+         />
       </div>
       </FacultyProtected>
 
@@ -62,6 +67,7 @@ export default function Modules() {
               }
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
+                  
                   dispatch(updateModule({ ...module, editing: false }));
                 }
               }}
