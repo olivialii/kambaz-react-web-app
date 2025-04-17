@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { FormControl, Card} from "react-bootstrap";
 
 import { useSelector } from "react-redux";
-import * as db from "./Database";
+
 import FacultyProtected from "./Account/FacultyProtected";
 import { useState } from "react";
-import Button from "react-bootstrap";
+
 
 
 export default function Dashboard(
@@ -18,7 +18,7 @@ export default function Dashboard(
   }) {
   
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = db;
+
   const [showAllCourses, setShowAllCourses] = useState(false);
   const isUserEnrolled = (courseId: string) =>
   enrollments.some(
@@ -76,13 +76,7 @@ export default function Dashboard(
       <div className="row" id="wd-dashboard-courses">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {courses
-            .filter(course => 
-              showAllCourses || 
-              enrollments.some(enrollment =>
-                enrollment.user === currentUser._id &&
-                enrollment.course === course._id
-              )
-            )
+            
             .map(course => (
               <div key={course._id} className="col" style={{ width: "300px" }}>
                 <div className="card">
@@ -95,6 +89,7 @@ export default function Dashboard(
                           {course.name}
                         </Card.Title>
 
+                        {/** 
                         <button
                             variant={isUserEnrolled(course._id) ? "danger" : "success"}
                             size="sm"
@@ -102,7 +97,8 @@ export default function Dashboard(
                           >
                             {isUserEnrolled(course._id) ? "Unenroll" : "Enroll"}
                           </button>
-
+                        */}
+                        
                         <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                           {course.description}
                         </Card.Text>

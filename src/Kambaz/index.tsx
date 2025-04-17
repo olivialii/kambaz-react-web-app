@@ -11,12 +11,13 @@ import ProtectedRoute from "./Account/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import * as userClient from "./Account/client.ts";
+import * as courseClient from "./Courses/client";
+
 
 
 export default function Kambaz() {
   const [courses, setCourses] = useState<any[]>([]);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  
   const fetchCourses = async () => {
     try {
       const courses = await userClient.findMyCourses();
@@ -26,11 +27,8 @@ export default function Kambaz() {
     }
   };
   useEffect(() => {
-    if (currentUser) {
-      fetchCourses();
-    }
+    fetchCourses();
   }, [currentUser]);
-
 
   const [course, setCourse] = useState<any>({
     _id: "1234", name: "New Course", number: "New Number",
@@ -41,7 +39,8 @@ export default function Kambaz() {
     setCourses([...courses, newCourse]);
   };
   
-  const deleteCourse = (courseId: any) => {
+  const deleteCourse = async (courseId: any) => {
+    const status = await courseClient.deleteCourse(courseId);
     setCourses(courses.filter((course) => course._id !== courseId));
   };
   const updateCourse = () => {
